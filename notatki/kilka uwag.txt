@@ -1,0 +1,129 @@
+ma jezyk podany zwraca assembler
+interpreter interpretuje asembler (jest podany)
+sprawdza na wynikach
+nie warto ca³ej gramatyki wklejaæ od razu do bizona
+do pierwszej wersji wyrzucamy mno¿enie, dzielenie, for i tablice
+dla okrojonego jêzyka kompilujemy var a b c begi read a read b c<-a + b write c end
+przydzielenie pamiêci
+bêd¹ potrzebne komórki robocze, wiêc dopiero po 10
+a <-10
+b 11
+c 12
+//etykiety
+GET
+STORE 10 
+GET
+STORE 11
+LOAD a
+ADD b
+STORE c
+LOAD c
+PUT
+HALT
+
+nastêpnie dodajemy ifa
+if a< b then
+write a	I1
+else 
+write b	I2
+end if
+
+end
+nie ma boolowskich, ale prawda to wieksze od zera, ujemne fa³sz
+LOAD b
+SUB a
+JZERO else
+I1
+JUMP end
+I2		//etykieta else:
+end // etykieta
+
+w drugim programie przet³umaczyæ etkiety na numer linii
+//ddwa przebiegi
+
+schemat przek³adu while:
+
+
+while a<= b do
+I1
+end while
+
+while:
+LOAD b
+INC 
+SUB a //a <=b, to a<b+1
+JZERO end
+I1
+JUMP while
+
+ seria testów, czy wszystkie dane chodz¹
+dorzucamy tablice
+c[i] <- a[j] + b[k]
+
+na pocz¹tku by³o a[100] b[100] c[100]
+sugerowany model c
+pam 10 i
+pam 11 j
+pam 12 k
+pam 13<-a<-100
+pam 14<-b<-200
+pam 15<-c<-300
+//mowie gdzie jest pierwszy element
+
+
+LOAD 13
+ADD 11
+STORE 0
+LOAD 14
+ADD 12
+STORE 1
+LOAD 15
+ADD 10
+STORE 3
+LOAD I0
+ADD I1
+STORE 2
+
+//krytyczne dla ilosci pamieci to dzielenie trzeba je samemu napisac
+w pamieci dzielnik
+potem dzielna
+plus 3 komorki z przodu na liczenie adresow posrednich, to potem pamiec jest wolna
+
+skladanie z klockow
+a potem zaczyna sie zabawa przy optymalizacji
+dodajemy tablice
+mnozenie
+dzielenie
+fory (mo¿na u¿ywaæ while) -> w forze pojawia sie zmienna lokalna moze narzucic nastepna komorke pamieci
+
+jak sie wpisuje 15? dodaje 15 razy 1, wiec gorzej
+przyklad generowania 99 wykorzystuje sie przesuniecia
+
+wiêcej ni¿ jeden przebieg ³adnie
+buforowanie ca³y kod wektorowy w stringach
+nie ejst super optymalnie, ale buforuje 
+
+dwa programy jeden ktory wypluwal assemblera etykietowanego, a drugi je zmienial
+mo¿na dodaæ pliki wsadowe oprocz make
+
+czy kod wynikowy siê przek³ada równowa¿nie
+a jak chodzi, to jakie bajery
+
+przygotowaæ sobie testy -> jak siê nie testuje to siê wysypuje
+przeanalizowaæ jakby siê napisa³o rêcznie
+
+u¿ywamy flexa, bisona, wszystko co siê nadaje z stla, mape z indeksowanym 
+program pamietamy w wektorze stringow
+wszystko jest dozwolone
+
+musi sie odpalic tutaj na komputerze na ubuntu
+
+bia³e znaki s¹ wa¿ne tylko wtedy kiedy s¹ wa¿ne do odró¿niania
+spacja miêdzy operatorami, mo¿e byæ enter, tab, milion spacji, itp
+
+roz³¹czne zbiory znaków
+du¿e litery operatory
+ma³e do zmiennych
+resztê ignoruje (tak jak np spacje, bia³e znaki, itp)
+
+z bisona i flexa po tych listach nie powinno byæ ju¿ ¿adnych pu³apek

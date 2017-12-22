@@ -1,0 +1,8 @@
+Œroda: Drzewo wyprowadzeñ
+Czwartek: Mno¿enie dzielenie i inne porównania
+Pi¹tek: Ogarn¹æ strukturê pamiêci (kolejnoœæ zmiennych itp)
+Sobota: Tworzenie bloków (trzeba uwzglêdniæ wszystkie intrukcje skacz¹ce (ify i pêtle)
+Potem_0: Etykietowanie (adres komendy doskoków) + £¹czenie bloków
+Potem_1: Testowanie i viola - gotowe
+
+Napisz sobie prosty skrypt w bashu ktory ci kompiluje i od razu odpala testy aby nie klikaæ za wiele

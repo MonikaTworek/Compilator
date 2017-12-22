@@ -1,0 +1,73 @@
+tablica
+a[1234] -tablica 1234 elementowa
+a - adres pocz 11
+---
+11
+..
+1245
+--
+
+a[i] - bierzemy adres bazowy i dodajemy i
+dodatkowa komórka na adres bazowy, bo trzeba zapamiêtaæ  adres bazowy
+
+value ->	nup
+		id
+
+identifier ->	pid
+		pid[pid]
+		pid[num]
+
+dla ka¿dego wyra¿enia a[i]+b lub b+a[i]
+tworzymy atrybuty
+typ <- plain
+id <-id...
+
+typ <- tab
+id<- idd...
+
+
+mamy gramatyke typu iA<- val + val
+		    $1    $2   $3
+if $2.type =/= plain
+p[0] <- adres zmiennej
+
+load id
+add ind
+store 0
+
+analogicznie dla $3
+je¿eli plain to po prostu load
+
+
+gdzeiœ w 0,1,2 - adresy poœrednie
+nie obs³ugujemy b³êdu w stylu declaration a[100], a a[102]
+
+
+a[5]
+a 11
+12
+13
+14
+15
+16
+
+a[i]=0:
+LOAD 11
+ADD i(i=10)
+STORE 0
+ZERO
+STORE I 0
+
+i=a[i]
+LOAD 11
+ADD 10
+STORE 0
+LOADI 0
+STORE 10
+
+dla a[i]=b[j]+c[k] // 3 adresy pomocnicze
+
+for i from a to b
+//Testy z 3 tablicami
+
+mo¿na czasem mno¿yæ przez dodawanie jako szybsze
