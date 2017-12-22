@@ -8,7 +8,8 @@ class Pflex(object):
               'READ', 'WRITE',
               'FOR', 'TO', 'DOWNTO', 'ENDFOR',
               'WHILE', 'DO', 'ENDWHILE',
-              'IF', 'THEN', 'ELSE', 'ENDIF'
+              'IF', 'THEN', 'ELSE', 'ENDIF',
+              'LEFT', 'RIGHT',
 
                                     'LOL', 'ASSIGN', 'PID', 'NUMB',
               'ADD', 'SUB', 'MULT', 'DIV', 'MOD',
@@ -44,6 +45,8 @@ class Pflex(object):
     t_GREAT = r'>'
     t_LESSEQ = r'<='
     t_GREATEQ = r'>='
+    t_LEFT = r'\['
+    t_RIGHT = r'\]'
 
     t_ignore = ' \t'
 
@@ -56,9 +59,9 @@ class Pflex(object):
         r'\n+'
         t.lexer.lineo += len(t.value)
 
-    def t_ERROR(self, t):
+    def t_error(self, t):
         logging.error('In line %d', t.lexer.lineo)
-        logging.error('Unknown symbols "%s"', t.value.split(' ', 1))
+        logging.error('Szto eta za simvol? "%s"', t.value.split(' ', 1))
         raise Errors()
 
     def __init__(self, **kwargs):
