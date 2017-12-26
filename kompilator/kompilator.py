@@ -2,6 +2,8 @@ import argparse
 from kompilator.drobiazgi.errors import Errors
 from kompilator.drobiazgi.pflex import Pflex
 from kompilator.drobiazgi.parser import Parser
+from kompilator.drobiazgi.analysis import Analysis
+
 
 
 
