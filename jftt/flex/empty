@@ -1,0 +1,4 @@
+flex zad.lex
+g++ -std=c++11 lex.yy.cc -lfl
+#g++ -std=c++11 lex.yy.c -lfl
+
