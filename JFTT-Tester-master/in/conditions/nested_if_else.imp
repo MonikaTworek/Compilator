@@ -1,0 +1,23 @@
+VAR
+	a b c d
+BEGIN
+	READ a;
+	READ b;
+	READ c;
+	READ d;
+
+	IF a > b THEN 
+		IF b < c THEN 
+			IF c <> d THEN 
+                WRITE a;
+				WRITE d;
+			ELSE
+				WRITE c;
+			ENDIF
+		ELSE
+			WRITE b;
+		ENDIF
+	ELSE
+		WRITE a;
+    ENDIF
+END

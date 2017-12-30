@@ -1,0 +1,19 @@
+VAR a b c d e
+BEGIN
+    a := 5 / 3;
+    WRITE a;
+    b := 15 / 5;
+    WRITE b;
+    c := 20 / 1;
+    WRITE c;
+    d := 20 / 37;
+    WRITE d;
+    e := 999 / 0;
+    WRITE e;
+    e := 2 / 0;
+    WRITE e;
+    e := 1 / 0;
+    WRITE e;
+    e := 0 / 0;
+    WRITE e;
+END

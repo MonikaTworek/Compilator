@@ -1,8 +1,0 @@
-porówanie, czy a==b:
-a-b>=0 i b-a>=0 //bo co jak jedna jest wiêksza?
-
-petla for od i=a to 0
-bo wiêkszoœæ studentów sprawdza iterator jako
-i<-a
-while i>=0
-//never ending story
