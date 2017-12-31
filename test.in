@@ -1,5 +1,8 @@
 VAR
-	a tab[10]
+	a b c d
 BEGIN
-	tab[a] := 3;
+	a := 5 * 3;
+	
+	WRITE a;
+	
 END

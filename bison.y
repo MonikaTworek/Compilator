@@ -68,9 +68,9 @@ void varDel(string name);
 %type <vec> program
 %type <vec> commands
 %type <vec> command
+%type <vec> expression
 %type <condStruct> condition
 %type <vec> value
-%type <vec> expression
 %type <pidStruct> identifier
 %token <pidentifier> t_pidentifier
 %token <number> t_num
@@ -136,6 +136,7 @@ expression : value { $$ = $1; }
 | value '-' value { $$ = Sub($1, $3); }
 | value '*' value { $$ = Mul($1, $3); }
 | value '/' value {$$ = Div($1, $3);}
+| value '%' value {$$ = Mod($1, $3);}
 condition : value '=' value	{ $$ = equal($1, $3); }
 | value t_NOTEQUAL value { $$ = not_equal($1, $3); }
 | value '<' value { $$ = lower($1, $3); }
@@ -190,6 +191,9 @@ void printProgram(vector<string> *vec) {
 		if ((*vec)[i].substr(0, 5) == "JZERO") {
 			(*vec)[i] = "JZERO " + to_string(labels[(*vec)[i].substr(6)]);
 		}
+		if ((*vec)[i].substr(0, 4) == "JODD") {
+			(*vec)[i] = "JODD " + to_string(labels[(*vec)[i].substr(5)]);
+		}
 	}
 	for(int i = 0; i < vec->size(); i++) {
 		if ((*vec)[i].substr(0, 5) == "LABEL") {
@@ -213,6 +217,23 @@ void varDel(string name) {
 	mem.erase(name);
 }
 
+vector<string> *genVal(long long val) {
+	vector<string> *commands = new vector<string>();
+	vector<int> tmp;
+	while(val) {
+		tmp.push_back(val%2);
+		val /=2;
+	}
+	commands->push_back("ZERO");
+	for(int i = tmp.size() -1; i >= 0; i--) {
+		if(tmp[i])
+			commands->push_back("INC");
+		if(i)
+			commands->push_back("SHL");
+	}
+	return commands;
+}
+
 vector<string> *read(pidentifierStruct *pidStruct) {
 	vector<string> *commands = new vector<string>();
 	if (pidStruct->index < 0) {
@@ -234,24 +255,7 @@ vector<string> *write(vector<string> *tmp) {
 	return commands;
 }
 
-vector<string> *genVal(long long val) {
-	vector<string> *commands = new vector<string>();
-	/* commands->push_back("1 genVal"); */
-	vector<int> tmp;
-	while(val) {
-		tmp.push_back(val%2);
-		val /=2;
-	}
-	commands->push_back("ZERO");
-	for(int i = tmp.size() -1; i >= 0; i--) {
-		if(tmp[i])
-			commands->push_back("INC");
-		if(i)
-			commands->push_back("SHL");
-	}
-	/* commands->push_back("2 genVal"); */
-	return commands;
-}
+
 vector<string> *Add(vector<string> *a, vector<string> *b) {
 	vector<string> *commands = new vector<string>();
 	commands->insert(commands->end(), b->begin(), b->end());
@@ -268,6 +272,7 @@ vector<string> *Sub(vector<string> *a, vector<string> *b) {
 	commands->push_back("SUB 1");
 	return commands;
 }
+
 vector<string> *Mul(vector<string> *a, vector<string> *b) {
 	vector<string> *commands = new vector<string>();
 	commands->insert(commands->end(), a->begin(), a->end());
@@ -277,22 +282,33 @@ vector<string> *Mul(vector<string> *a, vector<string> *b) {
 	commands->push_back("ZERO");
 	commands->push_back("STORE 6");
 
-
 	commands->push_back("LABEL" + to_string(label));
-
-	commands->push_back("LOAD 7");
-	
+	commands->push_back("LOAD 8");
 	commands->push_back("JZERO " + to_string(label + 1));
-	commands->push_back("DEC");
+	
+	commands->push_back("JODD " + to_string(label + 2));//a tu chcesz odwrotnie
+	commands->push_back("LOAD 8");
+	commands->push_back("SHR");
+	commands->push_back("STORE 8");
+	commands->push_back("LOAD 7");
+	commands->push_back("SHL");
 	commands->push_back("STORE 7");
+	commands->push_back("JUMP " + to_string(label));
+	commands->push_back("LABEL" + to_string(label + 2));
 	commands->push_back("LOAD 6");
-	commands->push_back("ADD 8");
+	commands->push_back("ADD 7");
 	commands->push_back("STORE 6");
+	commands->push_back("LOAD 8");
+	commands->push_back("SHR");
+	commands->push_back("STORE 8");
+	commands->push_back("LOAD 7");
+	commands->push_back("SHL");
+	commands->push_back("STORE 7");
 	commands->push_back("JUMP " + to_string(label));
 	commands->push_back("LABEL" + to_string(label + 1));
 	commands->push_back("LOAD 6");
 
-	label += 2;
+	label += 3;
 	return commands;
 }
 vector<string> *Div(vector<string> *a, vector<string> *b) {
@@ -425,7 +441,6 @@ vector<string> *Mod(vector<string> *a, vector<string> *b) {
 
 vector<string> *valToReg(pidentifierStruct *var, vector<string> *cmds) {
 	vector<string> *commands = new vector<string>();
-	/* commands->push_back("1 valToReg"); */
 	if (var->index < 0) {
 		commands->insert(commands->begin(), var->commands->begin(), var->commands->end());
 		commands->push_back("STORE 5");
@@ -436,7 +451,6 @@ vector<string> *valToReg(pidentifierStruct *var, vector<string> *cmds) {
 	} else {
 		commands->push_back("STORE " + to_string(var->index));
 	}
-	/* commands->push_back("2 valToReg"); */
 	return commands;
 }
 
@@ -624,5 +638,6 @@ int main(){
 }
 
 void yyerror (const char *msg) {
-    cout << "\n In line: "<< yylineo << "ERROR! " << msg << "\n";
+    cout << "error" << endl;
+    /* cout << "\n In line: "<< yylineo << "ERROR! " << msg << "\n"; */
 }
