@@ -1,5 +1,0 @@
-W celu uzyskania pliku należy wywołać
-$make
-
-Przykładowe wywołanie programu compiler dl test.in jeżeli interpreter znajduje się w folderze interpreter
-$./compiler < test.in > test.out && ./interpreter/interpreter test.out
