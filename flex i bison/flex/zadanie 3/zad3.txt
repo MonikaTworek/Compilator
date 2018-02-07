@@ -1,0 +1,15 @@
+tekst
+dalsza czesc tekstu
+%nikt nie zobaczy tego komentarza
+%
+grzecznie piszemy tekst
+/begin{comment}
+nikt
+sie
+nie
+spodziewa
+hiszpanskiej
+inkwizycji
+/end{comment}
+koniec klamstw
+
